@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f5f5f5;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        #submitBtn {
+            background-color: skyblue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        #resetBtn {
+            background-color: grey; /* Set the background color to grey */
+            color: white; /* Text color */
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Survey Form</h1>
+        <form id="surveyForm">
+            <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <select id="country" name="country" required>
+                    <option value="" disabled selected>Select Country</option>
+                    <option value="USA">USA</option>
+                    <option value="Canada">Canada</option>
+                    <option value="UK">UK</option>
+                    <!-- Add more countries here -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Gender:</label>
+                <input type="checkbox" id="male" name="gender" value="Male"> Male
+                <input type="checkbox" id="female" name="gender" value="Female"> Female
+            </div>
+            <div class="form-group">
+                <label for="profession">Profession:</label>
+                <input type="text" id="profession" name="profession" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="mobile">Mobile Number:</label>
+                <input type="tel" id="mobile" name="mobile" required>
+            </div>
+            <div class="form-group">
+                <button type="button" id="submitBtn">Submit</button>
+                <button type="button" id="resetBtn">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="popup" style="display: none;">
+        <h2>Survey Form Submission</h2>
+        <ul id="popupData"></ul>
+        <button id="closePopup">Close</button>
+    </div>
+
+    <script>
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            // Validate the form
+            if (document.getElementById("surveyForm").checkValidity()) {
+                // Get form data
+                const formData = new FormData(document.getElementById("surveyForm"));
+                const popupData = document.getElementById("popupData");
+                popupData.innerHTML = "";
+
+                for (const [key, value] of formData.entries()) {
+                    const label = document.querySelector(`label[for="${key}"]`).textContent;
+                    const listItem = document.createElement("li");
+                    listItem.textContent = `${label}: ${value}`;
+                    popupData.appendChild(listItem);
+                }
+
+                // Show the popup
+                document.getElementById("popup").style.display = "block";
+            }
+        });
+
+        document.getElementById("closePopup").addEventListener("click", function() {
+            // Close the popup and reset the form
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("surveyForm").reset();
+        });
+
+        document.getElementById("resetBtn").addEventListener("click", function() {
+            // Reset the form
+            document.getElementById("surveyForm").reset();
+        });
+    </script>
+</body>
+</html>
